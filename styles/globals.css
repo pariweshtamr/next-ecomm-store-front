@@ -2,26 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+  @apply font-montserrat;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply p-0 m-0 bg-alt;
+}
+.btn-transparent {
+  @apply bg-transparent text-white border border-solid border-[#fefefe] hover:bg-[#fefefe] transition-all hover:text-textColor;
+}
+.btn-normal {
+  @apply bg-[#fefefe] text-textColor border border-transparent;
+}
+.btn-primary {
+  @apply bg-primary text-textColor border border-transparent;
+}
+.btn-success {
+  @apply bg-success text-textColor border border-transparent;
+}
+.btn-secondary {
+  @apply bg-secondary text-textColor border border-transparent;
+}
+.btn-cart {
+  @apply bg-success text-textColor border border-success hover:shadow-[2px_5px_27px_-8px_rgba(0,0,0,0.3)] transition-all;
+}
+
+.btn-default {
+  @apply bg-gray-600 text-white border border-transparent;
+}
+.btn-normal,
+.btn-default,
+.btn-success,
+.btn-primary,
+.btn-secondary,
+.btn-cart,
+.btn-transparent,
+.btn-secondary {
+  @apply p-2 px-4 rounded-md hover:shadow-[2px_5px_27px_-8px_rgba(0,0,0,0.3)];
+}
+
+table.basic {
+  @apply w-full;
+}
+table.basic th {
+  @apply text-left uppercase text-[#aaa] text-[.7rem] font-[600];
+}
+table.basic tr td {
+  @apply py-4 border-t border-solid border-[rgba(0,0,0,0.1)];
+}
+
+input {
+  @apply w-full p-2 mb-2 border border-solid border-[#ccc] box-border rounded-md;
 }
