@@ -49,9 +49,13 @@ table.basic th {
   @apply text-left uppercase text-[#aaa] text-[.7rem] font-[600];
 }
 table.basic tr td {
-  @apply py-4 border-t border-solid border-[rgba(0,0,0,0.1)];
+  @apply py-4 border-t border-solid border-[rgba(0,0,0,0.1)] sm:text-xs;
 }
 
 input {
-  @apply w-full p-2 mb-2 border border-solid border-[#ccc] box-border rounded-md;
+  @apply w-full p-2 mb-2 border border-solid border-[#ccc] box-border rounded-md sm:text-sm;
+}
+
+input:focus {
+  @apply border border-[#222];
 }

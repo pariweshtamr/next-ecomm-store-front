@@ -10,6 +10,7 @@ const OrderSchema = new mongoose.Schema(
     postalCode: { type: String },
     street: { type: String },
     country: { type: String },
+    amount: { type: String },
     paid: { type: Boolean },
   },
   { timestamps: true }
