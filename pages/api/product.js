@@ -14,7 +14,7 @@ const getCartProducts = async (req, res) => {
 
 const getFilteredProducts = async (req, res) => {
   const { categories, sort, ...filters } = req.query
-  const [sortField, sortOrder] = sort.split("_")
+  const [sortField, sortOrder] = sort.split("-")
 
   const productsQuery = {
     category: categories.split(","),

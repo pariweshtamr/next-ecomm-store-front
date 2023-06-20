@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout"
 import ProductsGrid from "@/components/ProductsGrid"
+import Spinner from "@/components/Spinner"
 import { getAllProducts } from "@/lib/axiosHelper"
 import dbConnect from "@/lib/mongoose"
 import Category from "@/models/Category"
@@ -11,11 +12,16 @@ const SingleCategory = ({
   subCategories,
   products: originalProducts,
 }) => {
+  const defaultFilterValues = category.properties.map((p) => ({
+    name: p.name,
+    value: "all",
+  }))
+  const defaultSorting = "_id-asc"
   const [products, setProducts] = useState(originalProducts)
-  const [filterValues, setFilterValues] = useState(
-    category.properties.map((p) => ({ name: p.name, value: "all" }))
-  )
-  const [sort, setSort] = useState("price_desc")
+  const [filterValues, setFilterValues] = useState(defaultFilterValues)
+  const [sort, setSort] = useState(defaultSorting)
+  const [loadingProducts, setIsLoadingProducts] = useState(false)
+  const [filtersChanged, setFiltersChanged] = useState(false)
 
   const handleFilterChange = (filterName, filterValue) => {
     setFilterValues((prev) => {
@@ -24,9 +30,17 @@ const SingleCategory = ({
         value: p.name === filterName ? filterValue : p.value,
       }))
     })
+    setFiltersChanged(true)
+  }
+
+  const handleSortChange = (e) => {
+    setSort(e.target.value)
+    setFiltersChanged(true)
   }
 
   useEffect(() => {
+    if (!filtersChanged) return
+    setIsLoadingProducts(true)
     const catIds = [category._id, ...(subCategories?.map((c) => c._id) || [])]
     const params = new URLSearchParams()
     params.set("categories", catIds.join(","))
@@ -39,9 +53,19 @@ const SingleCategory = ({
     const fetchProducts = async () => {
       const prods = await getAllProducts(params.toString())
       setProducts(prods)
+      setTimeout(() => {
+        setIsLoadingProducts(false)
+      }, 1000)
     }
     fetchProducts()
-  }, [filterValues, subCategories, category._id, originalProducts, sort])
+  }, [
+    filterValues,
+    subCategories,
+    category._id,
+    originalProducts,
+    sort,
+    filtersChanged,
+  ])
 
   return (
     <Layout>
@@ -80,16 +104,23 @@ const SingleCategory = ({
               <select
                 className="basic"
                 value={sort}
-                onChange={(e) => setSort(e.target.value)}
+                onChange={handleSortChange}
               >
-                <option value="price_asc">Price (lowest first)</option>
-                <option value="price_desc">Price (highest first)</option>
+                <option value="price-asc">Price (lowest first)</option>
+                <option value="price-desc">Price (highest first)</option>
+                <option value="_id-asc">newest first</option>
+                <option value="_id-desc">oldest first</option>
               </select>
             </div>
           </div>
         </div>
-
-        <ProductsGrid products={products} />
+        {loadingProducts && <Spinner />}
+        {!loadingProducts && !products?.length && (
+          <div className="w-full flex justify-center py-10">
+            <h1>No products found!</h1>
+          </div>
+        )}
+        {!loadingProducts && <ProductsGrid products={products} />}
       </div>
     </Layout>
   )
