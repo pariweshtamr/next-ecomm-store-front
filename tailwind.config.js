@@ -7,6 +7,7 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/flowbite/**/*.js",
   ],
   theme: {
     extend: {
@@ -24,7 +25,7 @@ module.exports = {
         "2xl": { max: "1535px" },
         // => @media (max-width: 1535px) { ... }
 
-        "min-xl": { min: "1800px" },
+        "min-3xl": { min: "1800px" },
 
         xl: { max: "1279px" },
         // => @media (max-width: 1279px) { ... }
@@ -32,10 +33,11 @@ module.exports = {
         lg: { max: "1024px" },
         // => @media (max-width: 1023px) { ... }
 
+        "min-xl": { min: "1278px" },
         "min-lg": { min: "1023px" },
-        "min-md": { min: "767px" },
+        "min-md": { min: "821px" },
 
-        md: { max: "767px" },
+        md: { max: "820px" },
         // => @media (max-width: 767px) { ... }
 
         sm: { max: "639px" },

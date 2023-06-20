@@ -59,3 +59,15 @@ input {
 input:focus {
   @apply border border-[#222];
 }
+
+h2.title {
+  @apply text-4xl mb-8 font-[600] md:text-center;
+}
+
+h2.subtitle {
+  @apply text-[18px] text-[#222] tracking-wider uppercase mb-4 font-[700];
+}
+
+select.basic {
+  @apply rounded-sm bg-transparent border-none focus:outline-none;
+}

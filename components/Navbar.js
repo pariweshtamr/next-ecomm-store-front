@@ -30,6 +30,14 @@ const Navbar = () => {
             All Products
           </Link>
           <Link
+            className={
+              pathname.includes("/categories") ? activeLink : inactiveLink
+            }
+            href={"/categories"}
+          >
+            Categories
+          </Link>
+          <Link
             href={"/account"}
             className={
               pathname.includes("/account") ? activeLink : inactiveLink
@@ -49,7 +57,7 @@ const Navbar = () => {
           className={`
             ${
               active
-                ? "flex flex-col justify-center items-center gap-5 text-2xl bg-[#222] fixed top-0 bottom-0 left-0 right-0 transition-all"
+                ? "flex flex-col justify-center items-center gap-5 text-2xl bg-[#222] fixed top-0 bottom-0 left-0 right-0 transition-all z-50"
                 : "hidden"
             } min-md:hidden 
           `}
@@ -67,6 +75,14 @@ const Navbar = () => {
             href={"/products"}
           >
             All Products
+          </Link>
+          <Link
+            className={
+              pathname.includes("/categories") ? activeLink : inactiveLink
+            }
+            href={"/categories"}
+          >
+            Categories
           </Link>
           <Link
             href={"/account"}
