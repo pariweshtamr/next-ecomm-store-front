@@ -13,16 +13,16 @@ body {
   @apply bg-transparent text-white border border-solid border-[#fefefe] hover:bg-[#fefefe] transition-all hover:text-textColor;
 }
 .btn-normal {
-  @apply bg-[#fefefe] text-textColor border border-transparent;
+  @apply bg-[#fefefe] text-textColor border border-solid border-[#fefefe];
 }
 .btn-primary {
-  @apply bg-primary text-textColor border border-transparent;
+  @apply bg-primary text-textColor border border-solid border-primary;
 }
 .btn-success {
-  @apply bg-success text-textColor border border-transparent;
+  @apply bg-success text-textColor border border-solid border-success;
 }
 .btn-secondary {
-  @apply bg-secondary text-textColor border border-transparent;
+  @apply bg-secondary text-textColor border border-solid border-secondary;
 }
 .btn-cart {
   @apply bg-success text-textColor border border-success hover:shadow-[2px_5px_27px_-8px_rgba(0,0,0,0.3)] transition-all;

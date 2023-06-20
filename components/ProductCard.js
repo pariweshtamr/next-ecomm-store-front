@@ -7,6 +7,10 @@ import { addItemToCartAction } from "@/redux/cart/cartAction"
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch()
   const { _id, title, price, images } = product
+
+  const handleAddToCart = () => {
+    dispatch(addItemToCartAction(product))
+  }
   return (
     <div className="flex flex-col items-center w-[250px] gap-4 md:w-[70%]">
       <div className="relative bg-white h-[250px] w-[250px] md:h-[160px] md:w-[160px] rounded-lg flex items-center justify-center hover:shadow-lg">
@@ -27,12 +31,12 @@ const ProductCard = ({ product }) => {
 
         <Link
           href={`/product/${_id}`}
-          className="p-4 h-[200px] w-[200px] md:h-[140px] md:w-[140px]"
+          className="p-4 h-[200px] w-[200px] md:h-[140px] md:w-[140px] flex items-center justify-center"
         >
           <Image
             src={images[0]}
             alt="prod-img"
-            className="w-full max-h-full h-full"
+            className="w-full max-h-full"
             width={500}
             height={500}
           />
@@ -47,9 +51,10 @@ const ProductCard = ({ product }) => {
         </Link>
         <div className="flex items-center justify-between md:flex-col md:gap-2 md:w-full">
           <div className="text-2xl font-[600] md:text-lg">${price}</div>
+
           <button
             className="btn-cart flex gap-2 items-center !px-2 !py-1.5 sm:text-xs md:w-full md:justify-center"
-            onClick={() => dispatch(addItemToCartAction(product._id))}
+            onClick={handleAddToCart}
           >
             <CartIcon /> Add to cart
           </button>

@@ -14,6 +14,14 @@ module.exports = {
       fontFamily: {
         montserrat: ["montserrat", ...fontFamily.sans],
       },
+      keyframes: {
+        fly: {
+          "100%": { top: "0", left: "100%", opacity: "0", display: "none" },
+        },
+      },
+      animation: {
+        fly: "fly 1s  ease-in-out",
+      },
       colors: {
         alt: "#f2f2f2",
         textColor: "#0c0c0c",

@@ -12,14 +12,14 @@ const SingleCategory = ({
   subCategories,
   products: originalProducts,
 }) => {
-  const defaultFilterValues = category.properties.map((p) => ({
-    name: p.name,
-    value: "all",
-  }))
-  const defaultSorting = "_id-asc"
   const [products, setProducts] = useState(originalProducts)
-  const [filterValues, setFilterValues] = useState(defaultFilterValues)
-  const [sort, setSort] = useState(defaultSorting)
+  const [filterValues, setFilterValues] = useState(
+    category.properties.map((p) => ({
+      name: p.name,
+      value: "all",
+    }))
+  )
+  const [sort, setSort] = useState("_id-asc")
   const [loadingProducts, setIsLoadingProducts] = useState(false)
   const [filtersChanged, setFiltersChanged] = useState(false)
 
@@ -53,9 +53,7 @@ const SingleCategory = ({
     const fetchProducts = async () => {
       const prods = await getAllProducts(params.toString())
       setProducts(prods)
-      setTimeout(() => {
-        setIsLoadingProducts(false)
-      }, 1000)
+      setIsLoadingProducts(false)
     }
     fetchProducts()
   }, [
@@ -117,7 +115,9 @@ const SingleCategory = ({
         {loadingProducts && <Spinner />}
         {!loadingProducts && !products?.length && (
           <div className="w-full flex justify-center py-10">
-            <h1>No products found!</h1>
+            <h1 className="font-bold text-2xl text-[#222">
+              Sorry, No products found!
+            </h1>
           </div>
         )}
         {!loadingProducts && <ProductsGrid products={products} />}

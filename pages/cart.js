@@ -5,6 +5,7 @@ import {
   removeItemFromCartAction,
 } from "@/redux/cart/cartAction"
 import { emptyCart } from "@/redux/cart/cartSlice"
+import { RevealWrapper } from "next-reveal"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
@@ -87,14 +88,17 @@ const Cart = () => {
     return (
       <Layout>
         <div className="w-[85%] m-[0_auto] py-20">
-          <div className="bg-success rounded-md p-8 w-full text-center">
+          <RevealWrapper
+            origin="bottom"
+            className="bg-success rounded-md p-8 w-full text-center"
+          >
             <h1 className="text-4xl font-bold mb-2">
               Thank you for your order!
             </h1>
             <p className="text-gray-500">
               We will email you when your order has been dispatched!
             </p>
-          </div>
+          </RevealWrapper>
         </div>
       </Layout>
     )
@@ -104,15 +108,18 @@ const Cart = () => {
     <Layout>
       <div className="w-[85%] m-[0_auto] py-20 sm:w-[95%]">
         {!cartItems?.length ? (
-          <div className="bg-white rounded-md p-8">
+          <RevealWrapper origin="left" className="bg-white rounded-md p-8">
             <h2 className="title">Cart</h2>
             <div>Your cart is empty!</div>
-          </div>
+          </RevealWrapper>
         ) : (
           <>
-            <h2 className="title">Cart</h2>
             <div className="grid grid-cols-[1.3fr_0.7fr] gap-10 lg:grid-cols-1">
-              <div className="bg-white rounded-md p-8 h-max sm:p-4">
+              <RevealWrapper
+                origin="left"
+                className="bg-white rounded-md p-8 h-max sm:p-4"
+              >
+                <h2 className="title">Cart</h2>
                 {products?.length > 0 && (
                   <table className="basic">
                     <thead>
@@ -175,10 +182,13 @@ const Cart = () => {
                     </tbody>
                   </table>
                 )}
-              </div>
+              </RevealWrapper>
 
               {!!cartItems?.length && (
-                <div className="bg-white rounded-md p-8 h-max sm:p-4">
+                <RevealWrapper
+                  origin="right"
+                  className="bg-white rounded-md p-8 h-max sm:p-4"
+                >
                   <h2 className="font-bold text-3xl mb-5 text-center">
                     Order Information
                   </h2>
@@ -223,7 +233,7 @@ const Cart = () => {
                       Continue to payment
                     </button>
                   </form>
-                </div>
+                </RevealWrapper>
               )}
             </div>
           </>

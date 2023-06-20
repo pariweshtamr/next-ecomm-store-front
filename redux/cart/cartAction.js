@@ -1,9 +1,24 @@
+import { toast } from "react-hot-toast"
 import { addItemToCart, removeItemFromCart } from "./cartSlice"
 
-export const addItemToCartAction = (id) => async (dispatch) => {
+const options = {
+  duration: 2500,
+
+  iconTheme: {
+    primary: "#499c59",
+  },
+  ariaProps: {
+    role: "status",
+    "aria-live": "polite",
+  },
+}
+export const addItemToCartAction = (product) => async (dispatch) => {
   try {
-    dispatch(addItemToCart(id))
+    dispatch(addItemToCart(product._id)) &&
+      toast.success(`${product.title} added to cart!`)
   } catch (error) {
+    toast.error(`Unable to add product to cart!`)
+
     return {
       status: "error",
       message: error.message,

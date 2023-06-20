@@ -3,6 +3,7 @@ import ProductCard from "@/components/ProductCard"
 import dbConnect from "@/lib/mongoose"
 import Category from "@/models/Category"
 import Product from "@/models/Product"
+import { RevealWrapper } from "next-reveal"
 import Link from "next/link"
 
 const Categories = ({ mainCategories, categoryProducts }) => {
@@ -13,15 +14,19 @@ const Categories = ({ mainCategories, categoryProducts }) => {
           <div key={category._id} className="mb-12">
             <h2 className="subtitle">{category.name}</h2>
             <div className="grid grid-cols-2 min-md:grid-cols-4">
-              {categoryProducts[category._id].map((p) => (
-                <ProductCard key={p._id} product={p} />
+              {categoryProducts[category._id].map((p, i) => (
+                <RevealWrapper key={p._id} delay={i * 50}>
+                  <ProductCard product={p} />
+                </RevealWrapper>
               ))}
-              <Link
-                href={`/category/${category._id}`}
-                className="bg-[#ddd] w-[250px] h-[250px] flex items-center justify-center rounded-md text-xl text-[#888] hover:text-black hover:shadow-lg"
-              >
-                Show all &rarr;
-              </Link>
+              <RevealWrapper delay={categoryProducts[category._id].length * 50}>
+                <Link
+                  href={`/category/${category._id}`}
+                  className="bg-[#ddd] w-[250px] h-[250px] flex items-center justify-center rounded-md text-xl text-[#888] hover:text-black hover:shadow-lg"
+                >
+                  Show all &rarr;
+                </Link>
+              </RevealWrapper>
             </div>
           </div>
         ))}
