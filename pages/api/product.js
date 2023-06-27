@@ -13,18 +13,27 @@ const getCartProducts = async (req, res) => {
 }
 
 const getFilteredProducts = async (req, res) => {
-  const { categories, sort, ...filters } = req.query
-  const [sortField, sortOrder] = sort.split("-")
+  const { categories, sort, searchTerm, ...filters } = req.query
+  let [sortField, sortOrder] = (sort || "_id-desc").split("-")
 
-  const productsQuery = {
-    category: categories.split(","),
+  const productsQuery = {}
+  if (categories) {
+    productsQuery.category = categories.split(",")
   }
+
+  if (searchTerm) {
+    productsQuery["$or"] = [
+      { title: { $regex: searchTerm, $options: "i" } },
+      { desc: { $regex: searchTerm, $options: "i" } },
+    ]
+  }
+
   if (Object.keys(filters).length > 0) {
     Object.keys(filters).forEach((filterName) => {
       productsQuery[`properties.${filterName}`] = filters[filterName]
     })
   }
-
+  console.log(productsQuery)
   try {
     const products = await Product.find(productsQuery, null, {
       sort: { [sortField]: sortOrder === "asc" ? 1 : -1 },

@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
     dispatch(addItemToCartAction(product))
   }
   return (
-    <div className="flex flex-col items-center w-[250px] gap-4 md:w-[70%]">
+    <div className="flex flex-col items-center w-[250px] gap-4 md:w-[70%] xs:w-full">
       <div className="relative bg-white h-[250px] w-[250px] md:h-[160px] md:w-[160px] rounded-lg flex items-center justify-center hover:shadow-lg">
         <button
           data-tooltip-target="tooltip-default"

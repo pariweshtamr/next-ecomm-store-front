@@ -106,7 +106,7 @@ const Cart = () => {
 
   return (
     <Layout>
-      <div className="w-[85%] m-[0_auto] py-20 sm:w-[95%]">
+      <div className="w-[85%] m-[0_auto] py-10 sm:w-[95%]">
         {!cartItems?.length ? (
           <RevealWrapper origin="left" className="bg-white rounded-md p-8">
             <h2 className="title">Cart</h2>

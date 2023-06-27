@@ -2,6 +2,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { useSelector } from "react-redux"
+import SearchIcon from "./icons/SearchIcon"
 
 const Navbar = () => {
   const { cartItems } = useSelector((state) => state.cart)
@@ -100,47 +101,53 @@ const Navbar = () => {
           </Link>
         </nav>
 
-        {active ? (
-          <button
-            className="cursor-pointer hidden md:block z-50 fixed right-10"
-            onClick={() => setActive((prev) => false)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-10 h-10 text-[#aaa] hover:text-white"
+        <div className="flex items-center gap-4">
+          <Link href={"/search"} className="flex items-center gap-2">
+            <SearchIcon />
+          </Link>
+
+          {active ? (
+            <button
+              className="cursor-pointer hidden md:block z-50 fixed right-10"
+              onClick={() => setActive((prev) => false)}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        ) : (
-          <button
-            className="cursor-pointer hidden md:block z-50"
-            onClick={() => setActive((prev) => true)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-10 h-10 text-[#aaa] hover:text-white"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          ) : (
+            <button
+              className="cursor-pointer hidden md:block z-50"
+              onClick={() => setActive((prev) => true)}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
-          </button>
-        )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
     </header>
   )

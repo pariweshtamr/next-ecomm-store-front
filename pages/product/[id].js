@@ -5,7 +5,6 @@ import dbConnect from "@/lib/mongoose"
 import Product from "@/models/Product"
 import { addItemToCartAction } from "@/redux/cart/cartAction"
 import { useDispatch } from "react-redux"
-import FlyingButton from "react-flying-item"
 
 const ProductPage = ({ product }) => {
   const dispatch = useDispatch()
@@ -24,26 +23,14 @@ const ProductPage = ({ product }) => {
 
             <div className="flex items-center gap-[20px] md:justify-center md:gap-[30px]">
               <h3 className="text-4xl">${product.price}</h3>
-              <FlyingButton
-                src={product.images?.[0]}
-                targetTop="5%"
-                targetLeft="90%"
-                flyingItemStyling={{
-                  borderRadius: "0",
-                  width: "auto",
-                  height: "auto",
-                  maxWidth: "100px",
-                  maxHeight: "100px",
-                }}
+
+              <button
+                className="btn-success flex items-center gap-2"
+                onClick={() => dispatch(addItemToCartAction(product._id))}
               >
-                <span
-                  className="btn-success flex items-center gap-2"
-                  onClick={() => dispatch(addItemToCartAction(product._id))}
-                >
-                  <CartIcon />
-                  Add to cart
-                </span>
-              </FlyingButton>
+                <CartIcon />
+                Add to cart
+              </button>
             </div>
           </div>
         </div>
