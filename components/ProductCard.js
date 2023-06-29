@@ -3,30 +3,37 @@ import CartIcon from "./icons/CartIcon"
 import Link from "next/link"
 import { useDispatch } from "react-redux"
 import { addItemToCartAction } from "@/redux/cart/cartAction"
+import HeartIcon from "./icons/HeartIcon"
+import { useState } from "react"
+import { addProdToWishlist } from "@/lib/axiosHelper"
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, wishedProduct = false }) => {
   const dispatch = useDispatch()
+  const [inWishList, setInWishList] = useState(wishedProduct)
   const { _id, title, price, images } = product
 
   const handleAddToCart = () => {
     dispatch(addItemToCartAction(product))
   }
+
+  const addToWishlist = async () => {
+    const nextValue = !inWishList
+    await addProdToWishlist({ product: _id })
+    setInWishList(nextValue)
+  }
+
   return (
-    <div className="flex flex-col items-center w-[250px] gap-4 md:w-[70%] xs:w-full">
+    <div className="flex flex-col items-center w-[250px] gap-4 md:w-[100%] xs:w-full">
       <div className="relative bg-white h-[250px] w-[250px] md:h-[160px] md:w-[160px] rounded-lg flex items-center justify-center hover:shadow-lg">
         <button
           data-tooltip-target="tooltip-default"
           type="button"
-          className="absolute right-4 top-4 cursor-pointer text-[#efefef] hover:text-red-500"
+          className={`${
+            inWishList ? "text-red-500" : " text-[#efefef]"
+          } absolute right-2 top-2 cursor-pointer`}
+          onClick={addToWishlist}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-6 h-6"
-          >
-            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-          </svg>
+          <HeartIcon />
         </button>
 
         <Link

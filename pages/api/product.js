@@ -33,7 +33,6 @@ const getFilteredProducts = async (req, res) => {
       productsQuery[`properties.${filterName}`] = filters[filterName]
     })
   }
-  console.log(productsQuery)
   try {
     const products = await Product.find(productsQuery, null, {
       sort: { [sortField]: sortOrder === "asc" ? 1 : -1 },
