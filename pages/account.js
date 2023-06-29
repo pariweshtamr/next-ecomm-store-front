@@ -1,6 +1,11 @@
 import Layout from "@/components/Layout"
+import ProductCard from "@/components/ProductCard"
 import Spinner from "@/components/Spinner"
-import { addCustomerInfo, getCustomerInfo } from "@/lib/axiosHelper"
+import {
+  addCustomerInfo,
+  getCustomerInfo,
+  getProdsOnWishList,
+} from "@/lib/axiosHelper"
 import { signIn, signOut, useSession } from "next-auth/react"
 import { RevealWrapper } from "next-reveal"
 import { useEffect, useState } from "react"
@@ -15,16 +20,17 @@ const AccountPage = () => {
   const [street, setStreet] = useState("")
   const [postalCode, setPostalCode] = useState("")
   const [country, setCountry] = useState("")
-  const [loaded, setLoaded] = useState(false)
+  const [detailsLoaded, setDetailsLoaded] = useState(false)
+  const [wishlistLoaded, setWishlistLoaded] = useState(false)
+  const [wishedProducts, setWishedProducts] = useState([])
 
   useEffect(() => {
     const fetchCustomerInfo = async () => {
       const { customer } = await getCustomerInfo()
       if (!customer?._id) {
-        setLoaded(true)
+        setDetailsLoaded(true)
         return
       }
-
       setFName(customer?.fName)
       setLName(customer?.lName)
       setEmail(customer?.email)
@@ -32,9 +38,16 @@ const AccountPage = () => {
       setCountry(customer?.country)
       setStreet(customer?.street)
       setPostalCode(customer?.postalCode)
-      setLoaded(true)
+      setDetailsLoaded(true)
+    }
+
+    const fetchWishedProducts = async () => {
+      const products = await getProdsOnWishList()
+      setWishedProducts(products.map((p) => p.product))
+      setWishlistLoaded(true)
     }
     fetchCustomerInfo()
+    fetchWishedProducts()
   }, [])
 
   const saveCustomerInfo = async (e) => {
@@ -63,12 +76,25 @@ const AccountPage = () => {
         <div className="grid grid-cols-[1.2fr_0.8fr] gap-10">
           <RevealWrapper origin="left" className="bg-white rounded-md p-8">
             <h2 className="title">Wishlist</h2>
+            {!wishlistLoaded && <Spinner />}
+            {wishlistLoaded && (
+              <div className="grid grid-cols-2 md:grid-cols-1 place-items-center gap-y-12">
+                {!!wishedProducts.length > 0 &&
+                  wishedProducts.map((product) => (
+                    <ProductCard
+                      key={product._id}
+                      product={product}
+                      wishedProduct={true}
+                    />
+                  ))}
+              </div>
+            )}
           </RevealWrapper>
 
           <RevealWrapper origin="right" className="bg-white rounded-md p-8">
             <h2 className="title">Account Details</h2>
-            {!loaded && <Spinner />}
-            {loaded && (
+            {!detailsLoaded && <Spinner />}
+            {detailsLoaded && (
               <>
                 <form onSubmit={saveCustomerInfo}>
                   <div className="flex gap-2">

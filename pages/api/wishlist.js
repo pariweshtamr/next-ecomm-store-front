@@ -3,6 +3,20 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "./auth/[...nextauth]"
 import Wishlist from "@/models/Wishlist"
 
+const getWishlistProds = async (req, res) => {
+  try {
+    const { user } = await getServerSession(req, res, authOptions)
+
+    const wishedProducts = await Wishlist.find({
+      userEmail: user.email,
+    }).populate("product")
+
+    res.json(wishedProducts)
+  } catch (error) {
+    res.send(error.message)
+  }
+}
+
 const addToWishlist = async (req, res) => {
   try {
     const { user } = await getServerSession(req, res, authOptions)
@@ -30,6 +44,9 @@ async function handler(req, res) {
   switch (method) {
     case "POST":
       await addToWishlist(req, res)
+      break
+    case "GET":
+      await getWishlistProds(req, res)
       break
 
     default:
