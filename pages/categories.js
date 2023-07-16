@@ -47,7 +47,7 @@ const Categories = ({
 
 export async function getServerSideProps(ctx) {
   await dbConnect()
-  const { user } = await getServerSession(ctx.req, ctx.res, authOptions)
+  const session = await getServerSession(ctx.req, ctx.res, authOptions)
   const categories = await Category.find()
   const mainCategories = categories.filter((c) => !c.parent)
   const allFetchedProductsId = []
@@ -66,10 +66,12 @@ export async function getServerSideProps(ctx) {
     categoryProducts[mainCat._id] = products
   }
 
-  const wishedProducts = await Wishlist.find({
-    userEmail: user.email,
-    product: allFetchedProductsId?.map((productId) => productId.toString()),
-  })
+  const wishedProducts = session?.user
+    ? await Wishlist.find({
+        userEmail: session?.user?.email,
+        product: allFetchedProductsId?.map((productId) => productId.toString()),
+      })
+    : []
 
   return {
     props: {

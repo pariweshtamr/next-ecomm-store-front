@@ -19,12 +19,14 @@ const Products = ({ products, wishedProducts }) => {
 
 export async function getServerSideProps(ctx) {
   await dbConnect()
-  const { user } = await getServerSession(ctx.req, ctx.res, authOptions)
+  const session = await getServerSession(ctx.req, ctx.res, authOptions)
   const products = await Product.find({}, null, { sort: { _id: -1 } })
-  const wishedProducts = await Wishlist.find({
-    userEmail: user.email,
-    product: products.map((p) => p._id.toString()),
-  })
+  const wishedProducts = session?.user
+    ? await Wishlist.find({
+        userEmail: session?.user?.email,
+        product: products.map((p) => p._id.toString()),
+      })
+    : []
   return {
     props: {
       products: JSON.parse(JSON.stringify(products)),

@@ -1,8 +1,11 @@
 import Layout from "@/components/Layout"
 import ProductCard from "@/components/ProductCard"
+import SingleOrder from "@/components/SingleOrder"
 import Spinner from "@/components/Spinner"
+import Tabs from "@/components/Tabs"
 import {
   addCustomerInfo,
+  getAllOrders,
   getCustomerInfo,
   getProdsOnWishList,
 } from "@/lib/axiosHelper"
@@ -10,6 +13,7 @@ import { signIn, signOut, useSession } from "next-auth/react"
 import { RevealWrapper } from "next-reveal"
 import { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
+import { FcGoogle } from "react-icons/fc"
 
 const AccountPage = () => {
   const { data: session } = useSession()
@@ -20,11 +24,20 @@ const AccountPage = () => {
   const [street, setStreet] = useState("")
   const [postalCode, setPostalCode] = useState("")
   const [country, setCountry] = useState("")
-  const [detailsLoaded, setDetailsLoaded] = useState(false)
-  const [wishlistLoaded, setWishlistLoaded] = useState(false)
+  const [detailsLoaded, setDetailsLoaded] = useState(true)
+  const [wishlistLoaded, setWishlistLoaded] = useState(true)
   const [wishedProducts, setWishedProducts] = useState([])
+  const [ordersLoaded, setOrdersLoaded] = useState(true)
+  const [orderedProducts, setOrderedProducts] = useState([])
+  const [activeTab, setActiveTab] = useState("Orders")
 
   useEffect(() => {
+    if (!session) return
+
+    setDetailsLoaded(false)
+    setWishlistLoaded(false)
+    setOrdersLoaded(false)
+
     const fetchCustomerInfo = async () => {
       const { customer } = await getCustomerInfo()
       if (!customer?._id) {
@@ -43,12 +56,19 @@ const AccountPage = () => {
 
     const fetchWishedProducts = async () => {
       const products = await getProdsOnWishList()
-      setWishedProducts(products.map((p) => p.product))
+      setWishedProducts(products?.map((p) => p.product))
       setWishlistLoaded(true)
+    }
+
+    const fetchAllOrders = async () => {
+      const orders = await getAllOrders()
+      setOrderedProducts(orders)
+      setOrdersLoaded(true)
     }
     fetchCustomerInfo()
     fetchWishedProducts()
-  }, [])
+    fetchAllOrders()
+  }, [session])
 
   const saveCustomerInfo = async (e) => {
     e.preventDefault()
@@ -70,31 +90,87 @@ const AccountPage = () => {
     await signIn("google")
   }
 
+  const productRemovedFromWishlist = (idToRemove) => {
+    console.log(idToRemove)
+    setWishedProducts((products) => {
+      return [...products].filter(
+        (product) => product._id.toString() !== idToRemove
+      )
+    })
+  }
+
   return (
     <Layout>
       <div className="w-[85%] m-[0_auto] py-10 max-w-[1440px]">
-        <div className="grid grid-cols-[1.2fr_0.8fr] gap-10">
-          <RevealWrapper origin="left" className="bg-white rounded-md p-8">
-            <h2 className="title">Wishlist</h2>
-            {!wishlistLoaded && <Spinner />}
-            {wishlistLoaded && (
-              <div className="grid grid-cols-2 md:grid-cols-1 place-items-center gap-y-12">
-                {!!wishedProducts.length > 0 &&
-                  wishedProducts.map((product) => (
-                    <ProductCard
-                      key={product._id}
-                      product={product}
-                      wishedProduct={true}
-                    />
-                  ))}
-              </div>
+        <div className="grid grid-cols-[1.2fr_0.8fr] gap-10 md:grid-cols-1">
+          <RevealWrapper
+            origin="left"
+            className="bg-white rounded-md p-8 md:order-2"
+          >
+            <h2 className="title">
+              <Tabs
+                tabs={["Wishlist", "Orders"]}
+                active={activeTab}
+                onChange={setActiveTab}
+              />
+            </h2>
+
+            {activeTab === "Wishlist" ? (
+              <>
+                {!wishlistLoaded && <Spinner />}
+                {wishlistLoaded && (
+                  <>
+                    <div className="grid grid-cols-2 md:grid-cols-1 place-items-center gap-y-12">
+                      {wishedProducts.length > 0 &&
+                        wishedProducts.map((product) => (
+                          <ProductCard
+                            key={product._id}
+                            onChange={productRemovedFromWishlist}
+                            product={product}
+                            wishedProduct={true}
+                          />
+                        ))}
+                    </div>
+                    {wishedProducts.length === 0 && (
+                      <>
+                        {session ? (
+                          <p className="md:text-center">
+                            Your wishlist is empty!
+                          </p>
+                        ) : (
+                          <p className="md:text-center">
+                            Login to add products to your wish list!
+                          </p>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                {!ordersLoaded && <Spinner />}
+                {ordersLoaded && (
+                  <>
+                    {orderedProducts?.length === 0 && (
+                      <p>Login to see your orders!</p>
+                    )}
+                    <div>
+                      {orderedProducts?.length > 0 &&
+                        orderedProducts.map((order) => (
+                          <SingleOrder key={order._id} {...order} />
+                        ))}
+                    </div>
+                  </>
+                )}
+              </>
             )}
           </RevealWrapper>
 
           <RevealWrapper origin="right" className="bg-white rounded-md p-8">
-            <h2 className="title">Account Details</h2>
+            <h2 className="title">{session ? "Account Details" : "Login"}</h2>
             {!detailsLoaded && <Spinner />}
-            {detailsLoaded && (
+            {detailsLoaded && session ? (
               <>
                 <form onSubmit={saveCustomerInfo}>
                   <div className="flex gap-2">
@@ -161,6 +237,16 @@ const AccountPage = () => {
                   </button>
                 </form>
               </>
+            ) : (
+              <div className="flex justify-center">
+                <button
+                  className="btn-primary flex items-center gap-2"
+                  onClick={login}
+                >
+                  <FcGoogle size={24} />
+                  <span className="font-[500]">Continue with Google</span>
+                </button>
+              </div>
             )}
             {session && (
               <button className="btn-secondary mt-4" onClick={logout}>
@@ -169,12 +255,6 @@ const AccountPage = () => {
             )}
           </RevealWrapper>
         </div>
-
-        {!session && (
-          <button className="btn-primary" onClick={login}>
-            Login
-          </button>
-        )}
       </div>
     </Layout>
   )

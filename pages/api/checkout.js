@@ -1,7 +1,9 @@
 import dbConnect from "@/lib/mongoose"
 import Order from "@/models/Order"
 import Product from "@/models/Product"
+import { getServerSession } from "next-auth"
 import Stripe from "stripe"
+import { authOptions } from "./auth/[...nextauth]"
 
 async function handler(req, res) {
   const { method } = req
@@ -47,6 +49,8 @@ async function handler(req, res) {
       }
     }
 
+    const session = await getServerSession(req, res, authOptions)
+
     try {
       const order = await Order.create({
         line_items,
@@ -58,8 +62,9 @@ async function handler(req, res) {
         street,
         country,
         paid: false,
+        userEmail: session?.user?.email,
       })
-      const session = await stripe.checkout.sessions.create({
+      const stripeSession = await stripe.checkout.sessions.create({
         line_items,
         mode: "payment",
         customer_email: email,
@@ -68,7 +73,7 @@ async function handler(req, res) {
         metadata: { orderId: order._id.toString() },
       })
 
-      res.json({ url: session.url })
+      res.json({ url: stripeSession.url })
     } catch (error) {
       console.log(error)
     }

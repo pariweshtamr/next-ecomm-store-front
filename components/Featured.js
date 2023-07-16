@@ -18,21 +18,23 @@ const Featured = ({ product }) => {
     <div className="bg-[#222] text-white">
       <div className="w-[85%] m-[0_auto] py-20 max-w-[1440px]">
         <div className="grid grid-cols-[1fr_1.2fr] lg:grid-cols-1 lg:place-items-center lg:gap-10">
-          <div className="flex justify-center">
-            <RevealWrapper delay={0}>
-              <Image
-                src={product.images?.[0]}
-                width={1000}
-                height={1000}
-                alt="hero-img"
-                className="max-w-[100%] w-[70%] md:w-full"
-              />
+          <div className="flex justify-center w-full">
+            <RevealWrapper delay={0} origin="left" className="w-full">
+              <div className="flex justify-center items-center w-full h-full">
+                <Image
+                  src={product.images?.[0]}
+                  width={1000}
+                  height={1000}
+                  alt="hero-img"
+                  className="max-w-[100%] w-[70%] md:w-full"
+                />
+              </div>
             </RevealWrapper>
           </div>
           <div className="flex items-center lg:text-center">
             <div>
               <RevealWrapper origin="right" delay={0}>
-                <h1 className="font-normal text-6xl mb-8 sm:text-2xl">
+                <h1 className="font-normal text-5xl mb-8 sm:text-2xl">
                   {product.title}
                 </h1>
                 <p className="text-[#aaa] text-sm first-letter:capitalize">

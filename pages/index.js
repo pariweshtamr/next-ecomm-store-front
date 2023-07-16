@@ -6,6 +6,7 @@ import Product from "@/models/Product"
 import Wishlist from "@/models/Wishlist"
 import { getServerSession } from "next-auth"
 import { authOptions } from "./api/auth/[...nextauth]"
+import Setting from "@/models/Setting"
 
 const Home = ({ featureProduct, newProducts, wishedNewProducts }) => {
   return (
@@ -17,19 +18,25 @@ const Home = ({ featureProduct, newProducts, wishedNewProducts }) => {
 }
 
 export async function getServerSideProps(ctx) {
-  const featuredProductId = "648d492d9c2ada7f421841f6"
   await dbConnect()
+  const featuredProductSetting = await Setting.findOne({
+    name: "featuredProductId",
+  })
+  const featuredProductId = featuredProductSetting.value
   const featureProduct = await Product.findById(featuredProductId)
   const newProducts = await Product.find({}, null, {
     sort: { createdAt: -1 },
     limit: 8,
   })
 
-  const { user } = await getServerSession(ctx.req, ctx.res, authOptions)
-  const wishedNewProducts = await Wishlist.find({
-    userEmail: user.email,
-    product: newProducts.map((p) => p._id.toString()),
-  })
+  const session = await getServerSession(ctx.req, ctx.res, authOptions)
+
+  const wishedNewProducts = session?.user
+    ? await Wishlist.find({
+        userEmail: session?.user?.email,
+        product: newProducts.map((p) => p._id.toString()),
+      })
+    : []
 
   return {
     props: {

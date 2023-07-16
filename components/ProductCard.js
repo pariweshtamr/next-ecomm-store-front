@@ -7,17 +7,21 @@ import HeartIcon from "./icons/HeartIcon"
 import { useState } from "react"
 import { addProdToWishlist } from "@/lib/axiosHelper"
 
-const ProductCard = ({ product, wishedProduct = false }) => {
+const ProductCard = ({ product, wishedProduct = false, onChange }) => {
   const dispatch = useDispatch()
   const [inWishList, setInWishList] = useState(wishedProduct)
   const { _id, title, price, images } = product
-
   const handleAddToCart = () => {
     dispatch(addItemToCartAction(product))
   }
 
   const addToWishlist = async () => {
     const nextValue = !inWishList
+
+    if (nextValue === false && onChange) {
+      onChange(_id)
+    }
+
     await addProdToWishlist({ product: _id })
     setInWishList(nextValue)
   }

@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 
 const OrderSchema = new mongoose.Schema(
   {
+    userEmail: { type: String },
     line_items: [{ type: Object }],
     fName: { type: String },
     lName: { type: String },
