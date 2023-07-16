@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout"
-import { getProducts, handleCheckout } from "@/lib/axiosHelper"
+import { getProducts, getShippingFee, handleCheckout } from "@/lib/axiosHelper"
 import {
   addItemToCartAction,
   removeItemFromCartAction,
@@ -15,6 +15,7 @@ const Cart = () => {
   const dispatch = useDispatch()
   const { cartItems } = useSelector((state) => state.cart)
   const [products, setProducts] = useState([])
+  const [shippingFee, setShippingFee] = useState("")
   const { query } = useRouter()
   const fNameRef = useRef()
   const lNameRef = useRef()
@@ -38,6 +39,14 @@ const Cart = () => {
   }, [cartItems])
 
   useEffect(() => {
+    const fetchShippingSetting = async () => {
+      const shipping = await getShippingFee("shippingFee")
+      setShippingFee(shipping.value)
+    }
+    fetchShippingSetting()
+  }, [])
+
+  useEffect(() => {
     if (query?.success === "true") {
       dispatch(emptyCart())
     }
@@ -51,11 +60,11 @@ const Cart = () => {
     dispatch(removeItemFromCartAction(id))
   }
 
-  let total = 0
+  let productsTotal = 0
   for (const productId of cartItems) {
     const price = products.find((p) => p._id === productId)?.price || 0
 
-    total += price
+    productsTotal += price
   }
 
   const handleSubmit = async (e) => {
@@ -127,7 +136,7 @@ const Cart = () => {
                         <th>Product</th>
                         <th>Title</th>
                         <th>Qty</th>
-                        <th>Price</th>
+                        <th className="!text-right">Price</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -165,7 +174,7 @@ const Cart = () => {
                               +
                             </button>
                           </td>
-                          <td>
+                          <td className="text-right">
                             $
                             {cartItems.filter((id) => id === product._id)
                               .length * product.price}
@@ -174,14 +183,36 @@ const Cart = () => {
                       ))}
 
                       <tr>
-                        <td className="font-bold uppercase">Total</td>
-                        <td></td>
-                        <td></td>
-                        <td className="font-bold">${total}</td>
+                        <td colSpan={3}>Products</td>
+                        <td className="text-right text-[20px]">
+                          ${productsTotal}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan={3}>Shipping</td>
+                        <td className="text-right text-[20px]">
+                          ${shippingFee}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-bold uppercase" colSpan={3}>
+                          Total
+                        </td>
+                        <td className="font-bold text-right text-[20px]">
+                          ${productsTotal + +shippingFee}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
                 )}
+                <p className="text-center mt-5 text-sm">
+                  <i>
+                    <strong>Note:</strong>
+                  </i>{" "}
+                  <span className=" text-gray-600">
+                    Promotional codes can be applied at the payment page.
+                  </span>
+                </p>
               </RevealWrapper>
 
               {!!cartItems?.length && (
@@ -242,4 +273,5 @@ const Cart = () => {
     </Layout>
   )
 }
+
 export default Cart

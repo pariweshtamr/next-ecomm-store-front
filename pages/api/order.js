@@ -7,7 +7,6 @@ const getAllOrders = async (req, res) => {
   const { user } = await getServerSession(req, res, authOptions)
 
   const orders = await Order.find({ userEmail: user.email })
-  console.log(orders)
   res.json(orders)
 }
 
