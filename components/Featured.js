@@ -42,7 +42,7 @@ const Featured = ({ product }) => {
                 </p>
               </RevealWrapper>
               <div className="mt-8 flex gap-2 lg:gap-4 lg:justify-center">
-                <Link href={`/products/${product._id}`}>
+                <Link href={`/product/${product._id}`}>
                   <button className="btn-transparent">Read more</button>
                 </Link>
 

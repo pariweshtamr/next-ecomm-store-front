@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout"
 import ProductImages from "@/components/ProductImages"
+import ProductReviews from "@/components/ProductReviews"
 import CartIcon from "@/components/icons/CartIcon"
 import dbConnect from "@/lib/mongoose"
 import Product from "@/models/Product"
@@ -34,6 +35,8 @@ const ProductPage = ({ product }) => {
             </div>
           </div>
         </div>
+
+        <ProductReviews product={product} />
       </div>
     </Layout>
   )
