@@ -7,6 +7,7 @@ import {
 import { emptyCart } from "@/redux/cart/cartSlice"
 import { RevealWrapper } from "next-reveal"
 import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -107,6 +108,10 @@ const Cart = () => {
             <p className="text-gray-500">
               We will email you when your order has been dispatched!
             </p>
+
+            <Link href="/products" className="underline">
+              Continue Shopping
+            </Link>
           </RevealWrapper>
         </div>
       </Layout>
