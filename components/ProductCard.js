@@ -6,9 +6,13 @@ import { addItemToCartAction } from "@/redux/cart/cartAction"
 import HeartIcon from "./icons/HeartIcon"
 import { useState } from "react"
 import { addProdToWishlist } from "@/lib/axiosHelper"
+import { useSession } from "next-auth/react"
+import { toast } from "react-hot-toast"
 
 const ProductCard = ({ product, wishedProduct = false, onChange }) => {
   const dispatch = useDispatch()
+  const { data: session } = useSession()
+  console.log(session)
   const [inWishList, setInWishList] = useState(wishedProduct)
   const { _id, title, price, images } = product
   const handleAddToCart = () => {
@@ -16,6 +20,10 @@ const ProductCard = ({ product, wishedProduct = false, onChange }) => {
   }
 
   const addToWishlist = async () => {
+    if (!session) {
+      toast.error("Please login to add products to your wishlist!")
+      return
+    }
     const nextValue = !inWishList
 
     if (nextValue === false && onChange) {
