@@ -31,10 +31,10 @@ const SearchPage = () => {
     <Layout>
       <div className="flex justify-between w-[85%] max-w-[1440px] m-[0_auto] py-6">
         <div className="m-[0_auto] w-full">
-          <div className="sticky top-[72px] bg-[#F2F2F2] py-[5px]">
+          <div className="sticky top-[72px] bg-[#F2F2F2] py-[5px] z-[800]">
             <input
               type="text"
-              className="p-[10px_15px] rounded-md text-xl w-full "
+              className="p-[10px_15px] rounded-md text-xl w-full"
               placeholder="Search for products..."
               autoFocus
               onChange={(e) => setSearchTerm(e.target.value)}

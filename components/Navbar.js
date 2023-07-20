@@ -11,7 +11,7 @@ const Navbar = () => {
   const inactiveLink = "text-[#aaa] hover:text-white"
   const activeLink = "underline"
   return (
-    <header className="bg-[#222] text-white sticky top-0 z-50">
+    <header className="bg-[#222] text-white sticky top-0 z-[999]">
       <div className="flex justify-between w-[85%] max-w-[1440px] m-[0_auto] py-6">
         <Link href={"/"}>P&apos;Tech STore</Link>
 
