@@ -3,8 +3,7 @@ import Stripe from "stripe"
 import { buffer } from "micro"
 import Order from "@/models/Order"
 
-const endpointSecret =
-  "whsec_cf87d4541fc2542f9f5c14d32ab3bcfd8e5acd154adae919332a903d0c83345f"
+const endpointSecret = "whsec_CuUEtN2ESkGpAPXfKmJ2L0nBXFify5Tr"
 
 async function handler(req, res) {
   await dbConnect()
