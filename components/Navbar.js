@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import SearchIcon from "./icons/SearchIcon"
+import { signOut, useSession } from "next-auth/react"
 
 const Navbar = () => {
   const { cartItems } = useSelector((state) => state.cart)
@@ -10,6 +11,11 @@ const Navbar = () => {
   const { pathname } = useRouter()
   const inactiveLink = "text-[#aaa] hover:text-white"
   const activeLink = "underline"
+  const { data: session } = useSession()
+
+  const logout = async () => {
+    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_CLIENT_URL })
+  }
   return (
     <header className="bg-[#222] text-white sticky top-0 z-[999]">
       <div className="flex justify-between w-[85%] max-w-[1440px] m-[0_auto] py-6">
@@ -99,9 +105,31 @@ const Navbar = () => {
           >
             Cart ({cartItems?.length})
           </Link>
+
+          {session ? (
+            <button onClick={logout} className="text-secondary">
+              Logout
+            </button>
+          ) : (
+            <Link href={"/account"} className="text-success">
+              Login
+            </Link>
+          )}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
+          <div className="md:hidden">
+            {session ? (
+              <button onClick={logout} className="text-secondary">
+                Logout
+              </button>
+            ) : (
+              <Link href={"/account"} className="text-success">
+                Login
+              </Link>
+            )}
+          </div>
+
           <Link href={"/search"} className="flex items-center gap-2">
             <SearchIcon />
           </Link>

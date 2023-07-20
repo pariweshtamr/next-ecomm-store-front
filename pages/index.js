@@ -12,7 +12,12 @@ const Home = ({ featureProduct, newProducts, wishedNewProducts }) => {
   return (
     <Layout>
       <Featured product={featureProduct} />
-      <NewProducts products={newProducts} wishedProducts={wishedNewProducts} />
+      <div className="pb-10">
+        <NewProducts
+          products={newProducts}
+          wishedProducts={wishedNewProducts}
+        />
+      </div>
     </Layout>
   )
 }

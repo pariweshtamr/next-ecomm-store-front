@@ -7,6 +7,7 @@
 }
 
 body {
+  overscroll-behavior: none;
   @apply p-0 m-0 bg-alt;
 }
 .btn-transparent {
@@ -61,7 +62,7 @@ input:focus {
 }
 
 h2.title {
-  @apply text-4xl mb-8 font-[600] md:text-center;
+  @apply text-4xl mb-8 font-[600] md:text-center md:text-2xl;
 }
 
 h2.subtitle {

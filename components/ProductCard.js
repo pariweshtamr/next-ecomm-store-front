@@ -12,7 +12,6 @@ import { toast } from "react-hot-toast"
 const ProductCard = ({ product, wishedProduct = false, onChange }) => {
   const dispatch = useDispatch()
   const { data: session } = useSession()
-  console.log(session)
   const [inWishList, setInWishList] = useState(wishedProduct)
   const { _id, title, price, images } = product
   const handleAddToCart = () => {

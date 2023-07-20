@@ -82,16 +82,11 @@ const AccountPage = () => {
     }
   }
 
-  const logout = async () => {
-    await signOut({ callbackUrl: process.env.NEXT_PUBLIC_CLIENT_URL })
-  }
-
   const login = async () => {
     await signIn("google")
   }
 
   const productRemovedFromWishlist = (idToRemove) => {
-    console.log(idToRemove)
     setWishedProducts((products) => {
       return [...products].filter(
         (product) => product._id.toString() !== idToRemove
@@ -105,7 +100,7 @@ const AccountPage = () => {
         <div className="grid grid-cols-[1.2fr_0.8fr] gap-10 md:grid-cols-1">
           <RevealWrapper
             origin="left"
-            className="bg-white rounded-md p-8 md:order-2"
+            className="bg-white rounded-md p-8 md:order-2 sm:p-4"
           >
             <h2 className="title">
               <Tabs
@@ -167,7 +162,10 @@ const AccountPage = () => {
             )}
           </RevealWrapper>
 
-          <RevealWrapper origin="right" className="bg-white rounded-md p-8">
+          <RevealWrapper
+            origin="right"
+            className="bg-white rounded-md p-8 sm:p-8"
+          >
             <h2 className="title">{session ? "Account Details" : "Login"}</h2>
             {!detailsLoaded && <Spinner />}
             {detailsLoaded && session ? (
@@ -247,11 +245,6 @@ const AccountPage = () => {
                   <span className="font-[500]">Continue with Google</span>
                 </button>
               </div>
-            )}
-            {session && (
-              <button className="btn-secondary mt-4" onClick={logout}>
-                Logout
-              </button>
             )}
           </RevealWrapper>
         </div>
