@@ -3,7 +3,7 @@ import Stripe from "stripe"
 import { buffer } from "micro"
 import Order from "@/models/Order"
 
-const endpointSecret = "whsec_CuUEtN2ESkGpAPXfKmJ2L0nBXFify5Tr"
+const endpointSecret = process.env.WEBHOOK_SECRET
 
 async function handler(req, res) {
   await dbConnect()
