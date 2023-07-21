@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout"
+import Spinner from "@/components/Spinner"
 import { getProducts, getShippingFee, handleCheckout } from "@/lib/axiosHelper"
 import {
   addItemToCartAction,
@@ -15,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux"
 const Cart = () => {
   const dispatch = useDispatch()
   const { cartItems } = useSelector((state) => state.cart)
+  const [isLoading, setIsLoading] = useState(false)
   const [products, setProducts] = useState([])
   const [shippingFee, setShippingFee] = useState("")
   const { query } = useRouter()
@@ -27,14 +29,15 @@ const Cart = () => {
   const countryRef = useRef()
 
   useEffect(() => {
-    !cartItems?.length &&
+    cartItems?.length === 0 &&
       dispatch(setInitialCart(JSON.parse(localStorage.getItem("cart"))))
 
     if (cartItems?.length > 0) {
       const fetchProds = async () => {
+        setIsLoading(true)
         const { cartProducts } = await getProducts({ ids: cartItems })
-
         setProducts(cartProducts)
+        setIsLoading(false)
       }
       fetchProds()
     } else {
@@ -137,6 +140,7 @@ const Cart = () => {
                 className="bg-white rounded-md p-8 h-max sm:p-4"
               >
                 <h2 className="title">Cart</h2>
+                {isLoading && <Spinner fullWidth={true} />}
                 {products?.length > 0 && (
                   <table className="basic">
                     <thead>
