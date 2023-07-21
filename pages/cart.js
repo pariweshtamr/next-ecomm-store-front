@@ -29,8 +29,12 @@ const Cart = () => {
   const countryRef = useRef()
 
   useEffect(() => {
-    cartItems?.length === 0 &&
+    const cItems = localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart"))
+      : []
+    if (cartItems?.length === 0 && cItems?.length > 0) {
       dispatch(setInitialCart(JSON.parse(localStorage.getItem("cart"))))
+    }
 
     if (cartItems?.length > 0) {
       const fetchProds = async () => {
@@ -130,7 +134,13 @@ const Cart = () => {
         {!cartItems?.length ? (
           <RevealWrapper origin="left" className="bg-white rounded-md p-8">
             <h2 className="title">Cart</h2>
-            <div>Your cart is empty!</div>
+            <div className="mb-2">Your cart is empty!</div>
+            <Link
+              href={"/products"}
+              className="underline hover:font-bold transition"
+            >
+              Back to Shop
+            </Link>
           </RevealWrapper>
         ) : (
           <>
