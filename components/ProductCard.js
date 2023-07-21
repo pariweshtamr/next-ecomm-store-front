@@ -14,6 +14,7 @@ const ProductCard = ({ product, wishedProduct = false, onChange }) => {
   const { data: session } = useSession()
   const [inWishList, setInWishList] = useState(wishedProduct)
   const { _id, title, price, images } = product
+
   const handleAddToCart = () => {
     dispatch(addItemToCartAction(product))
   }

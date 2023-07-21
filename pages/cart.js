@@ -4,7 +4,7 @@ import {
   addItemToCartAction,
   removeItemFromCartAction,
 } from "@/redux/cart/cartAction"
-import { emptyCart } from "@/redux/cart/cartSlice"
+import { emptyCart, setInitialCart } from "@/redux/cart/cartSlice"
 import { RevealWrapper } from "next-reveal"
 import Image from "next/image"
 import Link from "next/link"
@@ -27,6 +27,9 @@ const Cart = () => {
   const countryRef = useRef()
 
   useEffect(() => {
+    !cartItems?.length &&
+      dispatch(setInitialCart(JSON.parse(localStorage.getItem("cart"))))
+
     if (cartItems?.length > 0) {
       const fetchProds = async () => {
         const { cartProducts } = await getProducts({ ids: cartItems })
@@ -37,7 +40,7 @@ const Cart = () => {
     } else {
       setProducts([])
     }
-  }, [cartItems])
+  }, [cartItems, dispatch])
 
   useEffect(() => {
     const fetchShippingSetting = async () => {
