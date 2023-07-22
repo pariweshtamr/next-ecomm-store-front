@@ -31,7 +31,7 @@ const addToWishlist = async (req, res) => {
       await Wishlist.findByIdAndDelete(wishedProd._id)
       res.json("Removed from wishlist!")
     } else {
-      const wish = await Wishlist.create({ userEmail: user.email, product })
+      await Wishlist.create({ userEmail: user.email, product })
       res.json("Added to wishlist!")
     }
   } catch (error) {
