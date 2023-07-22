@@ -100,7 +100,7 @@ const AccountPage = () => {
         <div className="grid grid-cols-[1.2fr_0.8fr] gap-10 md:grid-cols-1">
           <RevealWrapper
             origin="left"
-            className="bg-white rounded-md p-8 md:order-2 sm:p-4"
+            className="bg-white rounded-md p-8 md:order-2 sm:p-4 h-max"
           >
             <h2 className="title">
               <Tabs
@@ -164,7 +164,7 @@ const AccountPage = () => {
 
           <RevealWrapper
             origin="right"
-            className="bg-white rounded-md p-8 sm:p-8"
+            className="bg-white rounded-md p-8 sm:p-8 h-max"
           >
             <h2 className="title">{session ? "Account Details" : "Login"}</h2>
             {!detailsLoaded && <Spinner />}
