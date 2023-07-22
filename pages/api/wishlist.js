@@ -2,6 +2,7 @@ import dbConnect from "@/lib/mongoose"
 import { getServerSession } from "next-auth"
 import { authOptions } from "./auth/[...nextauth]"
 import Wishlist from "@/models/Wishlist"
+import Product from "@/models/Product"
 
 const getWishlistProds = async (req, res) => {
   try {
@@ -9,7 +10,7 @@ const getWishlistProds = async (req, res) => {
 
     const wishedProducts = await Wishlist.find({
       userEmail: user.email,
-    }).populate("product")
+    }).populate({ path: "product", model: Product })
 
     res.json(wishedProducts)
   } catch (error) {
