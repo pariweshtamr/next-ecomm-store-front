@@ -36,7 +36,7 @@ yarn add
 
 #### Step - 5
 
-create `.env` file from `.env.example` need [Stripe](https://stripe.com/), [Next-Auth](<[https://www.sanity.io/](https://next-auth.js.org/)>), [Google](https://console.cloud.google.com/)
+create `.env` file from `.env.example` need [Stripe](https://stripe.com/), [Next-Auth](https://next-auth.js.org/), [Google](https://console.cloud.google.com/)
 
 - MONGODB_URI
 - STRIPE_PK
