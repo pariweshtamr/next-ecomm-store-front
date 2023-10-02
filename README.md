@@ -1,38 +1,87 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# E-commerce || Built with NextJs and Payment gateway - Stripe.
 
-## Getting Started
+<div align="center">
+  
+  ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)&nbsp;![Stripe](https://img.shields.io/badge/Stripe-626CD9?style=for-the-badge&logo=Stripe&logoColor=white)&nbsp;![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+</div>
+
+# Deploy in **VERCEL** ![](https://img.shields.io/badge/Build-Passed-brightgreen) <a href="[https://ecommerce-full-stack-next-app.vercel.app/](https://next-ecomm-store-front.vercel.app/)" target="_blank" target="_blank" title="E-commerce shop" >Click Here!</a> <img src="readme_asset/rocket-joypixels.gif" width="auto" height="30">
+
+# Quick Overview - Setup & Run
+
+#### Step - 1
+
+Download or Clone
+
+```sh
+git clone https://github.com/pariweshtamr/next-ecomm-store-front.git
+```
+
+#### Step - 2
+
+```bash
+cd next-ecomm-store-front
+```
+
+#### Step - 4
+
+```bash
+npm i
+#or
+npm install
+#or
+yarn add
+```
+
+#### Step - 5
+
+create `.env` file from `.env.example` need [Stripe](https://stripe.com/), [Next-Auth]([https://www.sanity.io/](https://next-auth.js.org/)), [Google](https://console.cloud.google.com/)
+
+- MONGODB_URI
+- STRIPE_PK
+- STRIPE_SK
+- NEXTAUTH_URL
+- NEXT_PUBLIC_URL
+- CLIENT_URL
+- NEXTAUTH_SECRET
+- GOOGLE_FRONT_ID
+- GOOGLE_FRONT_SECRET
+- WEBHOOK_SECRET 
+
+
+#### Step - 6
+
+Build & Run the project
 
 First, run the development server:
 
 ```bash
 npm run dev
-# or
+#or
 yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+# Screenshot
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## #Homepage
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<img src="readme_asset/1.png">
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## #Product Page
 
-## Learn More
+<img src="readme_asset/2.png">
 
-To learn more about Next.js, take a look at the following resources:
+## #Cart
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<img src="readme_asset/5.png">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## #Payment Page - Stripe
 
-## Deploy on Vercel
+<img src="readme_asset/8.png">
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## #Purchased
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<img src="readme_asset/9.png">
