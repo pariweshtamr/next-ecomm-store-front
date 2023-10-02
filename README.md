@@ -6,7 +6,7 @@
 
 </div>
 
-# Deploy in **VERCEL** ![](https://img.shields.io/badge/Build-Passed-brightgreen) <a href="[https://ecommerce-full-stack-next-app.vercel.app/](https://next-ecomm-store-front.vercel.app/)" target="_blank" target="_blank" title="E-commerce shop" >Click Here!</a> <img src="readme_asset/rocket-joypixels.gif" width="auto" height="30">
+# Deploy in **VERCEL** ![](https://img.shields.io/badge/Build-Passed-brightgreen) <a href="https://next-ecomm-store-front.vercel.app/" target="_blank" target="_blank" title="E-commerce shop" >Click Here!</a> <img src="readme_asset/rocket-joypixels.gif" width="auto" height="30">
 
 # Quick Overview - Setup & Run
 
@@ -36,7 +36,7 @@ yarn add
 
 #### Step - 5
 
-create `.env` file from `.env.example` need [Stripe](https://stripe.com/), [Next-Auth]([https://www.sanity.io/](https://next-auth.js.org/)), [Google](https://console.cloud.google.com/)
+create `.env` file from `.env.example` need [Stripe](https://stripe.com/), [Next-Auth](<[https://www.sanity.io/](https://next-auth.js.org/)>), [Google](https://console.cloud.google.com/)
 
 - MONGODB_URI
 - STRIPE_PK
@@ -47,8 +47,7 @@ create `.env` file from `.env.example` need [Stripe](https://stripe.com/), [Next
 - NEXTAUTH_SECRET
 - GOOGLE_FRONT_ID
 - GOOGLE_FRONT_SECRET
-- WEBHOOK_SECRET 
-
+- WEBHOOK_SECRET
 
 #### Step - 6
 
